@@ -14,3 +14,14 @@ const markCurrentPage = () => {
     });
 };
 markCurrentPage();
+//  если на странице только 1 новость, то показывать ее вверху. В противном случае растягивать по всей высоте
+const changeDisplay = () => {
+    const articles = document.querySelectorAll('article'),
+        main = document.querySelector('main');
+    if (articles.length < 2) {
+        main.classList.remove('stretched');
+    } else {
+        main.classList.add('stretched');
+    }
+};
+changeDisplay();
