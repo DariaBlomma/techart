@@ -22,23 +22,26 @@
     //Соединяемся с базой данных используя наши доступы:
     $mysqli = new mysqli($host, $user, $password, $db_name);
 
-    $mysqli->query("CREATE TABLE IF NOT EXISTS number(
-        id INT,
-        num INT,
-        PRIMARY KEY (id)
-        )");
-    $mysqli->query("INSERT INTO number(id, num) VALUES (1, 5)");
+    // $mysqli->query("CREATE TABLE IF NOT EXISTS number(
+    //     id INT,
+    //     num INT,
+    //     PRIMARY KEY (id)
+    //     )");
+    // $mysqli->query("INSERT INTO number(id, num) VALUES (1, 5)");
 
     
-    if ($data !== null) {  
-        echo $data->number;
-        $num = $data->number;
-        $mysqli->query("UPDATE number SET id = 1, num = '$num'");
-    }
-    $get_num = $mysqli->query("SELECT num FROM number");
-    $row_number = $get_num->fetch_row();
-    $per_page = $row_number[0];
-    $page = 1;
+    // if ($data !== null) {  
+    //     echo $data->number;
+    //     $num = $data->number;
+    //     $mysqli->query("UPDATE number SET id = 1, num = '$num'");
+    // }
+    // $get_num = $mysqli->query("SELECT num FROM number");
+    // $row_number = $get_num->fetch_row();
+    // $per_page = $row_number[0];
+    $per_page = 5;
+    if (isset($_GET['page'])){
+        $page = $_GET['page'];
+    } else $page = 1;
     $art = ($page * $per_page) - $per_page;
 ?>
 <!DOCTYPE html>
@@ -56,12 +59,12 @@
     </header>
     <main class='main'>
         <?php
-            $result = $mysqli->query("SELECT *  FROM news LIMIT $art,$per_page");
+            $result = $mysqli->query("SELECT * FROM news ORDER BY idate DESC LIMIT $art,$per_page ");
             $row = $result->fetch_assoc();
             foreach ($result as $row) {
                 echo "
                 <article class='article'>
-                    <span class='date'>" . $row['idate'] . "</span>
+                    <span class='date'>" . date('d.m.Y', $row['idate']) . "</span>
                     <a href='#' class='title'>" . $row['title'] . "</a>
                     <p class='announce'>" . $row['announce'] . "</p>
                 </article>";
@@ -72,10 +75,6 @@
         <h3 class='title-3'>Страницы :</h3>
         <div class='pages-btns'>
             <?php             
-                if (isset($_GET['page'])){
-                    $page = $_GET['page'];
-                } else $page = 1;
-
                 // кол-во строк в таблице
                 $res = $mysqli->query("SELECT COUNT(*) FROM news");
                 $row2 = $res->fetch_row();
@@ -83,14 +82,15 @@
                 // кол-во страниц
                 $pages_amount = ceil($total / $per_page);
                 for ($i = 1; $i <= $pages_amount; $i++) {
-                    echo "<button class='btn'>" . $i . "</button>";
+                    echo "<a href='news.php?page=".$i."' class='btn'>" . $i . "</a>";
                     // echo "<a href=lessons.php?page=".$i."> Страница ".$i." </a>";
                 }
             ?>
         </div>
     </footer>
 </body>
-<script>
+<script src='script.js'></script>
+<!-- <script>
     const m = document.querySelector('main'),
         article = document.querySelector('article'),
         perPage = Math.floor(m.clientHeight / article.clientHeight);
@@ -123,5 +123,5 @@
         });
     };
     sendPageInfo();
-</script>
+</script> -->
 </html>

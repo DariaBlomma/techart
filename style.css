@@ -65,7 +65,14 @@ body {
     min-width: 36px;
     text-align: center;
     vertical-align: middle;
+    display: inline-block;
     margin: 1px;
+    background-color: rgb(222, 222, 222);
+    border: 1px solid #a9a6a6;
+    padding: 1px 6px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
 }
 
 .btn:hover {
@@ -74,7 +81,7 @@ body {
 }
 
 
-.btn:active {
+.btn:active, .current {
     background-color: #8c1460;
     color: white;
 }
