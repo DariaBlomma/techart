@@ -1,17 +1,21 @@
 'use strict';
 // выделить цветом текущую страницу
 const markCurrentPage = () => {
-    const cuurrentPage = window.location.search,
-        index = cuurrentPage.indexOf('='),
-        number = cuurrentPage.substring(index + 1),
+    const currentPage = window.location.search,
+        index = currentPage.indexOf('='),
+        number = currentPage.substring(index + 1),
         btns = document.querySelectorAll('.btn');
-    btns.forEach(item => {
-        if (item.textContent === number) {
-            item.classList.add('current');
-        } else {
-            item.classList.remove('current');
-        }
-    });
+    if (!currentPage) {       
+        btns[0].classList.add('current');
+    } else {
+        btns.forEach(item => {
+            if (item.textContent === number) {
+                item.classList.add('current');
+            } else {
+                item.classList.remove('current');
+            }
+        });
+    }
 };
 markCurrentPage();
 //  если на странице только 1 новость, то показывать ее вверху. В противном случае растягивать по всей высоте
