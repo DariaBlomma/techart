@@ -12,14 +12,17 @@
     // $password = 'root'; 
     // $db_name = 'f0497458_avengers'; 
 
-    //Соединяемся с базой данных используя наши доступы:
-    $mysqli = new mysqli($host, $user, $password, $db_name);
-    // кол-во новостей на странице
-    $per_page = 5;
-    if (isset($_GET['page'])){
-        $page = $_GET['page'];
-    } else $page = 1;
-    $art = ($page * $per_page) - $per_page;
+    try {
+        //Соединяемся с базой данных используя наши доступы:
+        $db = new PDO('mysql:host=127.0.0.1;dbname=news', $user, $password);
+        // кол-во новостей на странице
+        $per_page = 5;
+
+        if (isset($_GET['page'])){
+            $page = $_GET['page'];
+        } else $page = 1;
+
+        $art = ($page * $per_page) - $per_page;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,14 +39,18 @@
     </header>
     <main class='main stretched'>
         <?php
-            $result = $mysqli->query("SELECT * FROM news ORDER BY idate DESC LIMIT $art,$per_page ");
-            $row = $result->fetch_assoc();
-            foreach ($result as $row) {
+            $result = $db->prepare("SELECT * FROM news ORDER BY idate DESC LIMIT :art, :page ");
+            $result->bindValue(':art', $art, PDO::PARAM_INT);
+            $result->bindValue(':page', $per_page, PDO::PARAM_INT);
+            $result->execute();
+            $row = $result->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($row as $k => $v){
                 echo "
                 <article class='article'>
-                    <span class='date'>" . date('d.m.Y', $row['idate']) . "</span>
-                    <a class='title' href='view.php?id=" . $row['id'] . " '>" . $row['title'] . "</a>
-                    <p class='announce'>" . $row['announce'] . "</p>
+                    <span class='date'>" . date('d.m.Y', $v['idate']) . "</span>
+                    <a class='title' href='view.php?id=" . $v['id'] . " '>" . $v['title'] . "</a>
+                    <p class='announce'>" . $v['announce'] . "</p>
                 </article>";
             }
         ?>
@@ -53,14 +60,20 @@
         <div class='pages-btns'>
             <?php             
                 // кол-во строк в таблице
-                $res = $mysqli->query("SELECT COUNT(*) FROM news");
-                $row2 = $res->fetch_row();
-                $total = $row2[0];
-                // кол-во страниц
-                $pages_amount = ceil($total / $per_page);
-                for ($i = 1; $i <= $pages_amount; $i++) {
-                    echo "<a href='news.php?page=".$i."' class='btn'>" . $i . "</a>";
+                $res = $db->query("SELECT COUNT(*) FROM news");
+                while ($row = $res->fetch()) {
+                    $total = $row[0];
+                    // кол-во страниц
+                    $pages_amount = ceil($total / $per_page);
+                    for ($i = 1; $i <= $pages_amount; $i++) {
+                        echo "<a href='news.php?page=".$i."' class='btn'>" . $i . "</a>";
+                    }
                 }
+
+            } catch (PDOException $e) {
+                print "Error!: " . $e->getMessage();
+                die();
+            }
             ?>
         </div>
     </footer>
