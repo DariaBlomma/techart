@@ -13,6 +13,11 @@
         private $btns;
         private $btns_total;
         private $pages_amount;
+        private $id;
+        private $title;
+        private $content;
+        private $article;
+        private $article_row;
 
         public function __construct($host, $db_name, $user, $password, $per_page) {
             $this->host = $host;
@@ -26,10 +31,15 @@
             $this->db = new PDO('mysql:host=' .$this->host .';dbname=' .$this->db_name , $this->user, $this->password);
         }
 
+        private function workUrl($var, $param) {
+            if (isset($_GET[$param])){
+                $var = $_GET[$param];
+            } else $var = 1;
+            return $var;
+        }
+
         private function preparePages() {
-            if (isset($_GET['page'])){
-                $this->page = $_GET['page'];
-            } else $this->page = 1;
+            $this->page = $this->workUrl($this->page, 'page');
             $this->art = ($this->page * $this->per_page) - $this->per_page;
         }
 
@@ -40,6 +50,27 @@
             $this->news->bindValue(':page', $this->per_page, PDO::PARAM_INT);
             $this->news->execute();
             $this->news_row = $this->news->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        private function selectArticle() {
+            $this->id = $this->workUrl($this->id, 'id');
+            $this->article = $this->db->prepare("SELECT title, content FROM $this->db_name WHERE id = ? ");
+            $this->article->execute([$this->id]);
+
+            while ($this->article_row = $this->article->fetch(PDO::FETCH_LAZY)) {
+                $this->title = $this->article_row->title;
+                $this->content = $this->article_row->content;
+            }
+        }
+
+        public function printArticleTitle() {
+            $this->selectArticle();
+            echo "<h1 class='primary-title'>" . $this->title . "</h1>";
+        }
+
+        public function printArticleContent() {
+            $this->selectArticle();
+            echo $this->content;
         }
 
         public function printNews() {

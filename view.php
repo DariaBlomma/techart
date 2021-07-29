@@ -1,19 +1,11 @@
 <?php 
-    //Устанавливаем доступы к базе данных:
-    $host = '127.0.0.1';
-    //  $host = 'localhost'; //имя хоста, на локальном компьютере это localhost
-    $user = 'root'; //имя пользователя, по умолчанию это root
-    $password = 'root'; //пароль, по умолчанию пустой
-    $db_name = 'news'; //имя базы данных
+    require_once 'Db.php';
+    $db = new Db('127.0.0.1', 'news', 'root', 'root', 5);
 
     // для хостинга спринтхост
-    // $host = 'localhost'; 
-    // $user = 'f0497458_root'; 
-    // $password = 'root'; 
-    // $db_name = 'f0497458_avengers'; 
-
-    //Соединяемся с базой данных используя наши доступы:
-    $mysqli = new mysqli($host, $user, $password, $db_name);
+    // $db = new Db('localhost', 'f0497458_avengers', 'f0497458_root', 'root', 5);
+    try {
+        $db->connect();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,19 +19,16 @@
 <body>
     <header class='header'>
         <?php 
-            if (isset($_GET['id'])){
-                $id = $_GET['id'];
-            } else $id = 1;
-            $result = $mysqli->query("SELECT title, content FROM news WHERE id = '$id' ");
-            $row = $result->fetch_row();
-            $title = $row[0];
-            $content = $row[1];
-            echo "<h1 class='primary-title'>" . $title . "</h1>";
+            $db->printArticleTitle();
         ?>   
     </header>
     <main class='main view-main'>
         <?php 
-            echo $content;
+            $db->printArticleContent();
+        } catch (PDOException $e) {
+            print "Error!: " . $e->getMessage();
+            die();
+        }
         ?>
     </main>
     <footer class='footer'>
