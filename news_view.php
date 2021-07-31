@@ -11,7 +11,7 @@
         }
 
         public function printNews() {
-            include_once 'news_page.php';
+            include_once 'news.php';
         }
     }
 ?>

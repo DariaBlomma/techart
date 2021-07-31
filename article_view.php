@@ -10,7 +10,7 @@
         }
 
         public function printArticle() {
-            include_once 'article_page.php';
+            include_once 'article.php';
         }
     }
 ?>

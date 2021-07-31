@@ -35,8 +35,6 @@
         }
 
         public function selectNews($page) {
-            echo 'in selectNews';
-            echo $page;
             $this->art = ($page * $this->per_page) - $this->per_page;
             $this->news = $this->db->prepare("SELECT * FROM $this->db_name ORDER BY idate DESC LIMIT :art, :page ");
             $this->news->bindValue(':art', $this->art, PDO::PARAM_INT);
@@ -52,7 +50,6 @@
         }
 
         public function selectArticle($id) {
-            echo 'in selectArticle';
             $this->article = $this->db->prepare("SELECT title, content FROM $this->db_name WHERE id = ? ");
             $this->article->execute([$id]);
             return $this->article;
