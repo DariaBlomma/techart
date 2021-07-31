@@ -1,11 +1,7 @@
 <?php 
-    require_once 'Db.php';
-    $db = new Db('127.0.0.1', 'news', 'root', 'root', 5);
-
-    // для хостинга спринтхост
-    // $db = new Db('localhost', 'f0497458_avengers', 'f0497458_root', 'root', 5);
-    try {
-        $db->connect();
+    require_once 'news_controller.php';
+    $controller = new NewsController();
+    $controller->id = $controller->workUrl('id');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,22 +13,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class='header'>
-        <?php 
-            $db->printArticleTitle();
-        ?>   
-    </header>
-    <main class='main view-main'>
-        <?php 
-            $db->printArticleContent();
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage();
-            die();
-        }
-        ?>
-    </main>
-    <footer class='footer'>
-        <a href='news.php'>Все новости > ></a>
-    </footer>
+    <?php 
+        $controller->callView();
+    ?> 
 </body>
 </html>
