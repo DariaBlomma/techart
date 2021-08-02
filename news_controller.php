@@ -17,8 +17,8 @@
 
         public function __construct() {
             // для хостинга спринтхост
-            // $this->model = new NewsModel('localhost', 'f0497458_avengers', 'f0497458_root', 'root');
-            $this->model = new NewsModel('127.0.0.1', 'news', 'root', 'root');
+            // $this->model = new NewsModel('localhost', 'f0497458_avengers', 'f0497458_root', 'root', 'news');
+            $this->model = new NewsModel('127.0.0.1', 'news', 'root', 'root', 'news');
         }
         
         public function workUrl($param) {
