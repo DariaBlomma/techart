@@ -5,12 +5,14 @@ const markCurrentPage = () => {
         index = currentPage.indexOf('='),
         number = currentPage.substring(index + 1),
         btns = document.querySelectorAll('.btn');
+
     if (!currentPage) {       
         btns[0].classList.add('current');
     } else {
         btns.forEach(item => {
             if (item.textContent === number) {
                 item.classList.add('current');
+                localStorage.setItem('pageNumber', number);
             } else {
                 item.classList.remove('current');
             }

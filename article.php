@@ -22,7 +22,19 @@
     </main>
     <footer class='footer'>
             <!-- <a href='news.php'>Все новости > ></a> -->
-        <a href='index.php'>Все новости > ></a>
+        <a class='return' href='index.php'>Все новости > ></a>
     </footer> 
 </body>
+<script>
+    // перенаправить на страницу, откуда переходили на эту статью
+    const redirect = () => {
+        const link = document.querySelector('.return'),
+        pageNumber = localStorage.getItem('pageNumber');
+
+        if (pageNumber) {
+            link.href = `index.php?page=${pageNumber}`;
+        }  
+    };
+    redirect();
+</script>
 </html>
