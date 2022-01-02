@@ -1,0 +1,108 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 17px;
+}
+
+body {
+	background-color: #767373;
+}
+
+
+.header {
+	background-color: transparent;
+	height: 90px;
+	border-bottom: 1px solid white;
+	display: grid;
+	grid-template-areas: 'logo slogan contacts lang menu';
+	/*grid-template-columns: repeat(5, max-content);*/ 
+	grid-template-columns: max-content 1fr max-content max-content max-content;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+	color: #fff;
+}
+
+.logo {
+	grid-area: logo;
+	background-image: url('images/logo.png');
+	width: 175px;
+	height: 38px;
+	margin-right: 50px;
+}
+
+.slogan {
+	grid-area: slogan;
+	max-width: 500px;
+    /*color: #3c3c3c;*/
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.92px;
+    justify-self: left;
+}
+
+.contacts {
+	grid-area: contacts;
+/*	display: flex;
+	justify-content: space-evenly;*/
+	font-size: 16px;
+    font-weight: 300;
+}
+
+.link {
+	color: #fff;
+	text-decoration: none;
+}
+
+.contacts-link.email {
+	border-bottom: 1px solid #ddd;
+}
+
+.contacts-link.email:hover {
+	border: none;
+}
+
+.contacts-separator {
+	display: inline-block;
+	margin: 0 5px;
+}
+
+.lang-versions {
+	grid-area: lang;
+	padding: 10px 55px 10px 15px;
+	position: relative;
+}
+
+.lang-versions::after {
+	content: '';
+	position: absolute;
+/*	top: 50%;*/
+	width: 21px;
+	height: 11px;
+	background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAyMSAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCguNzI2NjUgLjY4NzAxIC0uNTYwNTcgLjgyODExIDAgMSkiIHN0cm9rZT0iIzAwMCIgZD0iTTAtLjVoMTQuNDUiLz48cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgtLjcyNjY1IC42ODcwMSAuNTYwNTcgLjgyODExIDIxIDEpIiBzdHJva2U9IiMwMDAiIGQ9Ik0wLS41aDE0LjQ1Ii8+PC9zdmc+) no-repeat;
+}
+
+
+.hamburger-menu {
+	grid-area: menu;
+    width: 27px;
+    height: 19px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.hamburger-line {
+	height: 3px;
+	width: 100%;
+	background-color: #fff;
+}

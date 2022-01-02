@@ -1,14 +1,18 @@
 'use strict';
+console.log(1);
 // выделить цветом текущую страницу
 const markCurrentPage = () => {
-    const currentPage = window.location.search,
-        index = currentPage.indexOf('='),
-        number = currentPage.substring(index + 1),
+    const currentPage = window.location.href,
+        index = currentPage.indexOf('-'),
+        numberDirty = currentPage.substr(index + 1, 1),
+        number = parseInt(numberDirty),
         btns = document.querySelectorAll('.btn');
 
-    if (!currentPage) {       
+console.log(2);
+console.log(btns);
+    // if (!currentPage) {       
         btns[0].classList.add('current');
-    } else {
+    // } else {
         btns.forEach(item => {
             if (item.textContent === number) {
                 item.classList.add('current');
@@ -17,17 +21,18 @@ const markCurrentPage = () => {
                 item.classList.remove('current');
             }
         });
-    }
+    // }
 };
-markCurrentPage();
-//  если на странице только 1 новость, то показывать ее вверху. В противном случае растягивать по всей высоте
-const changeDisplay = () => {
-    const articles = document.querySelectorAll('article'),
-        main = document.querySelector('main');
-    if (articles.length < 2) {
-        main.classList.remove('stretched');
-    } else {
-        main.classList.add('stretched');
-    }
-};
-changeDisplay();
+// markCurrentPage();
+
+
+// // перенаправить на страницу, откуда переходили на эту статью
+// const redirect = () => {
+//     const link = document.querySelector('.return'),
+//     pageNumber = localStorage.getItem('pageNumber');
+
+//     if (pageNumber) {
+//         link.href = `index.php?page=${pageNumber}`;
+//     }  
+// };
+// redirect();

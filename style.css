@@ -10,8 +10,17 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    padding: 0 50px;
+    padding-top: 35px;
+    margin: 0;
+    background-color: #efeeed;
+    
 }
 
+.news-list {
+    background-color: white;
+    padding: 5px 10px;
+}
 
 .header {
     border-bottom: 1px dotted#8c1460;
@@ -62,6 +71,7 @@ body {
     flex: 0 0 auto;
     padding-top: 10px;
     padding-bottom: 10px;
+
 }
 
 
